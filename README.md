@@ -2,6 +2,8 @@
 
 Kirby Admin Bar provides a simple admin bar for your frontend. It allows logged-in users to quickly edit the current page and navigate to other important pages of the panel.
 
+![kirby-admin-bar](https://github.com/user-attachments/assets/8a61dbf1-d098-4631-b176-afad9b554546)
+
 ****
 
 ## Installation
