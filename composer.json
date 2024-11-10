@@ -1,0 +1,32 @@
+{
+    "name": "pechente/kirby-admin-bar",
+    "description": "Kirby Admin Bar",
+    "license": "MIT",
+    "type": "kirby-plugin",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "René Henrich",
+            "email": "contact@rene-henrich.de"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "getkirby/cms": ">=4.0.0",
+        "getkirby/composer-installer": "^1.2"
+    },
+    "keywords": [
+        "kirby5",
+        "kirby5-cms",
+        "kirby5-plugin",
+        "admin",
+        "frontend",
+        "panel"
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "getkirby/composer-installer": true
+        }
+    }
+}
