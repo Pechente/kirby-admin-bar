@@ -8,6 +8,7 @@ if (!!kirby()->user()): ?>
         :root {
             --admin-bar--font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             --admin-bar--base-font-size: 14px;
+            --admin-bar--base-line-height: 1.2;
             --admin-bar--height: 48px;
             --admin-bar--z-index: 110;
             --admin-bar--color: #2b2b2b;
@@ -27,6 +28,7 @@ if (!!kirby()->user()): ?>
             align-items: center;
             font-family: var(--admin-bar--font-family);
             font-size: var(--admin-bar--base-font-size);
+            line-height: var(--admin-bar--base-line-height);
             position: var(--admin-bar--position);
             top: 0;
             left: 0;

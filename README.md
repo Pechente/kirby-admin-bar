@@ -48,6 +48,7 @@ Additionally, Admin Bar relies on a bunch of CSS variables that you can overwrit
 :root {
   --admin-bar--font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --admin-bar--base-font-size: 14px;
+  --admin-bar--base-line-height: 1.2;
   --admin-bar--height: 48px;
   --admin-bar--z-index: 110;
   --admin-bar--color: #2b2b2b;
