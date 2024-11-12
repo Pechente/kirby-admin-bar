@@ -4,6 +4,8 @@ Kirby Admin Bar provides a simple admin bar for your frontend. It allows logged-
 
 ![kirby-admin-bar](https://github.com/user-attachments/assets/c1e31edd-81dc-441e-88af-ab9d2b718f93)
 
+⚠️ Be aware that this plugin might disable the pages cache in its current state. I'm working on a solution.
+
 ****
 
 ## Installation
