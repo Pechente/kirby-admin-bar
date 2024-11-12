@@ -4,7 +4,7 @@ Kirby Admin Bar provides a simple admin bar for your frontend. It allows logged-
 
 ![kirby-admin-bar](https://github.com/user-attachments/assets/c1e31edd-81dc-441e-88af-ab9d2b718f93)
 
-⚠️ Be aware that this plugin might disable the pages cache in its current state. I'm working on a solution.
+Please note that this plugin might disable Kirby staticache since it renders different content for logged-in users and guests.
 
 ****
 
@@ -28,11 +28,21 @@ composer require pechente/kirby-admin-bar
 
 ## Setup
 
-Install the plugin and add this snippet to your template directly after the opening `<body>` tag:
+Install the plugin and enable it in your config.php:
 
 ```php
-<?php snippet('admin-bar') ?>
+return [
+    'ready' => function ($kirby) {
+        return [
+            'pechente.kirby-admin-bar' => [
+                'active' => $kirby->user() !== null
+            ]
+        ];
+    },
+]
 ```
+
+Enabling the plugin this way will automatically insert it after the opening body tag for logged-in users.
 
 By default, the admin bar has a fixed position which might cause it to overlap your header / content. Kirby Admin Bar provides a CSS variable to offset your header accordingly, i.e.:
 
