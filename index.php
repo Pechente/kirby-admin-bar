@@ -11,7 +11,7 @@ Kirby::plugin('pechente/kirby-admin-bar', [
     'hooks' => [
         'page.render:after' => function ($contentType, $data, $html) {
             if ($contentType === 'html') {
-                $html = str_replace('<body>', '<body>' . snippet('admin-bar', [], true), $html);
+                $html = str_replace('</body>', snippet('admin-bar', [], true), $html) . '</body>';
             }
             return $html;
         },

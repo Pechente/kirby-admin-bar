@@ -42,7 +42,7 @@ return [
 ]
 ```
 
-Enabling the plugin this way will automatically insert it after the opening body tag for logged-in users.
+Enabling the plugin this way will automatically insert it before the closing body tag for logged-in users.
 
 By default, the admin bar has a fixed position which might cause it to overlap your header / content. Kirby Admin Bar provides a CSS variable to offset your header accordingly, i.e.:
 
