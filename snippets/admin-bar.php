@@ -150,6 +150,9 @@ if (!!kirby()->user()): ?>
 
     <div class="admin-bar">
         <?php
+        $panelLanguage = $user->language();
+        $siteLanguage = kirby()->language();
+        kirby()->setCurrentTranslation($panelLanguage);
         $roleTitle = $user->role()?->title();
         $userName = $user->name()->or($user->username());
         $avatar = $user->avatar();
@@ -162,13 +165,14 @@ if (!!kirby()->user()): ?>
             <?php if (!$page->disableEditButton()->toBool()): ?>
                 <a href="<?= $pageEditLink ?>" class="admin-bar__link admin-bar__link--highlight">
                     <?php snippet('panel-icon', ['name' => 'edit']) ?>
-                    <?= t('edit') ?>
+                    <?= t('edit', ) ?>
                 </a>
             <?php endif ?>
             <?php foreach ($visiblePanelAreas as $panelArea): ?>
                 <a href="<?= Panel::url($panelArea['link']) ?>" class="admin-bar__link">
                     <?php snippet('panel-icon', ['name' => $panelArea['icon']]) ?>
                     <?= $panelArea['label'] ?>
+                    <?php $panelArea ?>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -205,4 +209,5 @@ if (!!kirby()->user()): ?>
             </div>
         </div>
     </div>
+<?php kirby()->setCurrentTranslation($siteLanguage); ?>
 <?php endif ?>
