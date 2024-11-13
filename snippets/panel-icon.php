@@ -1,6 +1,6 @@
 <?php
 $name ??= null;
-$panelIcons = svg('kirby/panel/dist/img/icons.svg');
+$panelIcons = svg($kirby->root('kirby') . '/panel/dist/img/icons.svg');
 
 if ($panelIcons && $name) {
     if (preg_match('/<symbol[^>]*id="icon-' . $name . '"[^>]*viewBox="(.*?)"[^>]*>(.*?)<\/symbol>/s', $panelIcons, $matches)) {
