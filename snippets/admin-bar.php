@@ -44,8 +44,8 @@ $user = kirby()->user()
         border-bottom: 1px solid var(--admin-bar--border-color);
 
         a {
+            text-decoration: none;
             color: inherit;
-
         }
 
         a:hover {
@@ -62,6 +62,7 @@ $user = kirby()->user()
     }
 
     .admin-bar__user {
+        min-width: 140px;
         position: relative;
         display: flex;
         align-items: center;
@@ -72,6 +73,10 @@ $user = kirby()->user()
         svg {
             width: var(--admin-bar--icon-size);
         }
+    }
+
+    .admin-bar__user-name {
+        flex: 1;
     }
 
     .admin-bar__user:hover, .admin-bar__user:focus, .admin-bar__user:focus-within {
@@ -139,7 +144,7 @@ $user = kirby()->user()
         display: none;
     }
 
-    @media screen and (max-width: 200px) {
+    @media screen and (max-width: 600px) {
         .admin-bar__link:not(:first-child) {
             display: none;
         }
