@@ -2,7 +2,7 @@
 
 Kirby Admin Bar provides a simple admin bar for your frontend. It allows logged-in users to quickly edit the current page and navigate to other important pages of the panel.
 
-![kirby-admin-bar](https://github.com/user-attachments/assets/c1e31edd-81dc-441e-88af-ab9d2b718f93)
+![](https://github.com/user-attachments/assets/c1e31edd-81dc-441e-88af-ab9d2b718f93)
 
 Please note that this plugin might disable Kirby staticache since it renders different content for logged-in users and guests.
 
@@ -16,13 +16,13 @@ Download and copy this repository to `/site/plugins/kirby-admin-bar`.
 
 ### Git submodule
 
-```
+```sh
 git submodule add https://github.com/pechente/kirby-admin-bar.git site/plugins/kirby-admin-bar
 ```
 
 ### Composer
 
-```
+```sh
 composer require pechente/kirby-admin-bar
 ```
 
@@ -78,50 +78,50 @@ Additionally, Admin Bar relies on a bunch of CSS variables that you can overwrit
 
 ### Dealing with virtual pages
 
-The edit link will not work for virtual pages. In these cases, you can disable the edit button by returning the field "disableEditButton" from the page, i.e.:
+The edit link will not work for virtual pages. In these cases, you can disable the edit button by returning the field `disableEditButton` from the page, i.e.:
 
 ```php
 'routes' => [
-        [
-            'pattern' => 'virtual',
-            'action' => function () {
-                return Page::factory([
+    [
+        'pattern' => 'virtual',
+        'action' => function () {
+            return Page::factory([
+                // ...
+                'content' => [
                     // ...
-                    'content' => [
-                        // ...
-                        'disableEditButton' => true, // Will disable the edit button
-                    ]
-                ]);
-            }
-        ]
+                    'disableEditButton' => true, // Will disable the edit button
+                ]
+            ]);
+        }
     ]
+]
 ```
 
 Sometimes however, your virtual page is being fed by another page like a settings page. In this case, you can overwrite the URL of the edit link instead of disabling it completely, like so:
 
 ```php
 'routes' => [
-        [
-            'pattern' => 'virtual',
-            'action' => function () {
-                return Page::factory([
+    [
+        'pattern' => 'virtual',
+        'action' => function () {
+            return Page::factory([
+                // ...
+                'content' => [
                     // ...
-                    'content' => [
-                        // ...
-                        'panelUrl' => Panel::url('settings') // Set a custom link here - could even be an external URL
-                    ]
-                ]);
-            }
-        ]
+                    'panelUrl' => Panel::url('settings') // Set a custom link here - could even be an external URL
+                ]
+            ]);
+        }
     ]
+]
 ```
 
 Both `panelUrl` and `disableEditButton` are read as page fields and can therefore even be created as regular fields in a blueprint so can fill them out through the panel or create them as pre-filled hidden fields.
 
 ## License
 
-MIT
+[MIT License](LICENSE.md)
 
 ## Credits
 
-- [René Henrich](https://github.com/ghost)
+- [René Henrich](https://github.com/Pechente)
