@@ -13,6 +13,9 @@ $user = kirby()->user()
 
 <div class="admin-bar">
     <?php
+    /**
+     * @var Kirby\Cms\Page $page
+     */
     $panelLanguage = $user->language();
     $siteLanguage = kirby()->language();
     kirby()->setCurrentTranslation($panelLanguage);
@@ -20,9 +23,10 @@ $user = kirby()->user()
     $userName = $user->name()->or($user->username());
     $avatar = $user->avatar();
     $pageEditLink = $page->panelUrl()->or($page->panel()->url());
-    $status = $page->status();
-    $panelAreas = Panel::areas();
-    $visiblePanelAreas = array_filter($panelAreas, fn($panelArea) => $panelArea['menu']);
+    $permissions = $user->role()->permissions();
+    $visiblePanelAreas = array_filter(Panel::areas(), function($panelArea) use ($permissions) {
+        return $panelArea['menu'] && $permissions->for('access', $panelArea['id'], true);
+    });
     ?>
     <div class="admin-bar__links">
         <?php if (!$page->disableEditButton()->toBool()): ?>
