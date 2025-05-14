@@ -4,7 +4,21 @@ if (option('pechente.kirby-admin-bar.active') !== true) return;
 use Kirby\Filesystem\F;
 use Kirby\Panel\Panel;
 
-$user = kirby()->user()
+$user = kirby()->user();
+
+$panelLanguage = $user->language();
+$siteLanguage = kirby()->language();
+kirby()->setCurrentTranslation($panelLanguage);
+$roleTitle = $user->role()?->title();
+$userName = $user->name()->or($user->username());
+$avatar = $user->avatar();
+$pageEditLink = $page->panelUrl()->or($page->panel()->url());
+$permissions = $user->role()->permissions();
+$visiblePanelAreas = array_filter(Panel::areas(), function($panelArea) use ($permissions) {
+    return $panelArea['menu'] && $permissions->for('access', $panelArea['id'], true);
+});
+$kirbyMajorVersion = substr(kirby()->version(), 0, 1);
+$supportsDarkMode = $kirbyMajorVersion > 4;
 ?>
 
 <style>
@@ -12,22 +26,6 @@ $user = kirby()->user()
 </style>
 
 <div class="admin-bar">
-    <?php
-    /**
-     * @var Kirby\Cms\Page $page
-     */
-    $panelLanguage = $user->language();
-    $siteLanguage = kirby()->language();
-    kirby()->setCurrentTranslation($panelLanguage);
-    $roleTitle = $user->role()?->title();
-    $userName = $user->name()->or($user->username());
-    $avatar = $user->avatar();
-    $pageEditLink = $page->panelUrl()->or($page->panel()->url());
-    $permissions = $user->role()->permissions();
-    $visiblePanelAreas = array_filter(Panel::areas(), function($panelArea) use ($permissions) {
-        return $panelArea['menu'] && $permissions->for('access', $panelArea['id'], true);
-    });
-    ?>
     <div class="admin-bar__links">
         <?php if (!$page->disableEditButton()->toBool()): ?>
             <a href="<?= $pageEditLink ?>" class="admin-bar__link admin-bar__link--highlight">
@@ -75,4 +73,11 @@ $user = kirby()->user()
         </div>
     </div>
 </div>
+
+<script>
+    const theme = localStorage.getItem('kirby$theme') || '<?= $supportsDarkMode ? "auto" : "light" ?>';
+    const adminBar = document.querySelector('.admin-bar');
+    adminBar.classList.add(`admin-bar--theme-${theme}`);
+</script>
+
 <?php kirby()->setCurrentTranslation($siteLanguage); ?>
