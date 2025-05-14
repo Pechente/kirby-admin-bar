@@ -29,7 +29,7 @@
 @media (prefers-color-scheme: dark) {
   .admin-bar--theme-auto {
     --admin-bar--color: #FFF;
-    --admin-bar--color--hover: #303030;
+    --admin-bar--color--hover: #FFF;
     --admin-bar--background-color: #121212;
     --admin-bar--border-color: #303030;
     --admin-bar--link-color: #0C1004;
