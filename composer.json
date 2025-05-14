@@ -3,7 +3,7 @@
     "description": "Kirby Admin Bar",
     "license": "MIT",
     "type": "kirby-plugin",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "homepage": "https://github.com/Pechente/kirby-admin-bar",
     "support": {
         "docs": "https://github.com/Pechente/kirby-admin-bar/blob/main/README.md",
