@@ -17,7 +17,8 @@ $userName = $user->name()->or($user->username());
 $avatar = $user->avatar();
 $pageEditLink = $page->panelUrl()->or($page->panel()->url());
 $permissions = $user->role()->permissions();
-$menu = new Menu(Panel::areas(), $permissions->toArray());
+// pass '' as current area: the frontend is no Panel area, and user-defined
+$menu = new Menu(Panel::areas(), $permissions->toArray(), '');
 $menuEntries = [];
 foreach ($menu->areas() as $area) {
     // keep separators but avoid leading or doubled ones
