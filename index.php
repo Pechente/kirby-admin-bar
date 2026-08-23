@@ -22,6 +22,7 @@ Kirby::plugin('pechente/kirby-admin-bar', [
     ],
     'options' => [
         'active' => false,
+        'nonce' => true,
     ],
     'hooks' => [
         'page.render:after' => function ($contentType, $data, $html) {

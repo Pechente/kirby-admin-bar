@@ -43,10 +43,11 @@ if (end($menuEntries) === '-') {
 }
 $kirbyMajorVersion = substr(kirby()->version(), 0, 1);
 $supportsDarkMode = $kirbyMajorVersion > 4;
+$nonce = option('pechente.kirby-admin-bar.nonce', true) ? kirby()->nonce() : null;
 ?>
 
 <?php if (!$isInPreview): ?>
-    <style>
+    <style<?= $nonce ? ' nonce="' . $nonce . '"' : '' ?>>
         <?= F::read(dirname(__DIR__) . '/assets/admin-bar.css') ?>
     </style>
 
@@ -107,7 +108,7 @@ $supportsDarkMode = $kirbyMajorVersion > 4;
         </div>
     </div>
 
-    <script>
+    <script<?= $nonce ? ' nonce="' . $nonce . '"' : '' ?>>
         const theme = localStorage.getItem('kirby$theme') || '<?= $supportsDarkMode ? "auto" : "light" ?>';
         const adminBar = document.querySelector('.admin-bar');
         adminBar.classList.add(`admin-bar--theme-${theme}`);
