@@ -2,6 +2,7 @@
 if (option('pechente.kirby-admin-bar.active') !== true) return;
 
 use Kirby\Filesystem\F;
+use Kirby\Panel\Menu;
 use Kirby\Panel\Panel;
 
 $user = kirby()->user();
@@ -16,9 +17,30 @@ $userName = $user->name()->or($user->username());
 $avatar = $user->avatar();
 $pageEditLink = $page->panelUrl()->or($page->panel()->url());
 $permissions = $user->role()->permissions();
-$visiblePanelAreas = array_filter(Panel::areas(), function ($panelArea) use ($permissions) {
-    return $panelArea['menu'] && $permissions->for('access', $panelArea['id'], true);
-});
+$menu = new Menu(Panel::areas(), $permissions->toArray());
+$menuEntries = [];
+foreach ($menu->areas() as $area) {
+    // keep separators but avoid leading or doubled ones
+    if ($area === '-') {
+        if ($menuEntries !== [] && end($menuEntries) !== '-') {
+            $menuEntries[] = '-';
+        }
+        continue;
+    }
+
+    $entry = $menu->entry($area);
+
+    // skip hidden/disabled entries and ones without a link (dialogs/drawers)
+    if ($entry === false || empty($entry['link']) || ($entry['disabled'] ?? false)) {
+        continue;
+    }
+
+    $menuEntries[] = $entry;
+}
+// drop trailing separator
+if (end($menuEntries) === '-') {
+    array_pop($menuEntries);
+}
 $kirbyMajorVersion = substr(kirby()->version(), 0, 1);
 $supportsDarkMode = $kirbyMajorVersion > 4;
 ?>
@@ -36,11 +58,15 @@ $supportsDarkMode = $kirbyMajorVersion > 4;
                     <?= t('edit') ?>
                 </a>
             <?php endif ?>
-            <?php foreach ($visiblePanelAreas as $panelArea): ?>
-                <a href="<?= Panel::url($panelArea['link']) ?>" class="admin-bar__link">
-                    <?php snippet('panel-icon', ['name' => $panelArea['icon']]) ?>
-                    <?= $panelArea['label'] ?>
-                </a>
+            <?php foreach ($menuEntries as $menuEntry): ?>
+                <?php if ($menuEntry === '-'): ?>
+                    <div class="admin-bar__separator"></div>
+                <?php else: ?>
+                    <a href="<?= Panel::url($menuEntry['link']) ?>" class="admin-bar__link">
+                        <?php if ($menuEntry['icon'] ?? null) snippet('panel-icon', ['name' => $menuEntry['icon']]) ?>
+                        <?= $menuEntry['text'] ?>
+                    </a>
+                <?php endif ?>
             <?php endforeach; ?>
         </div>
         <div class="admin-bar__user" tabindex="0">
@@ -62,11 +88,15 @@ $supportsDarkMode = $kirbyMajorVersion > 4;
                     <?php snippet('panel-icon', ['name' => 'user']) ?>
                     <?= t('view.account') ?>
                 </a>
-                <?php foreach ($visiblePanelAreas as $panelArea): ?>
-                    <a href="<?= Panel::url($panelArea['link']) ?>" class="admin-bar__dropdown-link">
-                        <?php snippet('panel-icon', ['name' => $panelArea['icon']]) ?>
-                        <?= $panelArea['label'] ?>
-                    </a>
+                <?php foreach ($menuEntries as $menuEntry): ?>
+                    <?php if ($menuEntry === '-'): ?>
+                        <div class="admin-bar__dropdown-separator"></div>
+                    <?php else: ?>
+                        <a href="<?= Panel::url($menuEntry['link']) ?>" class="admin-bar__dropdown-link">
+                            <?php if ($menuEntry['icon'] ?? null) snippet('panel-icon', ['name' => $menuEntry['icon']]) ?>
+                            <?= $menuEntry['text'] ?>
+                        </a>
+                    <?php endif ?>
                 <?php endforeach; ?>
                 <a class="admin-bar__dropdown-link"
                    href="<?= Panel::url('logout') ?>">

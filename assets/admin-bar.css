@@ -174,12 +174,31 @@ a.admin-bar__link--highlight:hover {
   display: none;
 }
 
+.admin-bar__separator {
+  flex-shrink: 0;
+  width: 8px;
+}
+
+.admin-bar__dropdown-separator {
+  display: none;
+  flex-shrink: 0;
+  height: 8px;
+}
+
 @media screen and (max-width: 600px) {
   .admin-bar__link:not(:first-child) {
     display: none;
   }
 
+  .admin-bar__separator {
+    display: none;
+  }
+
   .admin-bar__dropdown-link:not(:last-child):not(:first-child) {
     display: flex;
+  }
+
+  .admin-bar__dropdown-separator {
+    display: block;
   }
 }
