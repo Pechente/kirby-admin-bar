@@ -95,10 +95,13 @@
   align-items: center;
   gap: 8px;
   align-self: stretch;
+  flex-shrink: 0;
+  white-space: nowrap;
   background: var(--admin-bar--background-color);
 
   svg {
     width: var(--admin-bar--icon-size);
+    flex-shrink: 0;
     fill: var(--admin-bar--color);
   }
 }
@@ -119,8 +122,10 @@
 
 .admin-bar__links {
   flex: 1;
+  min-width: 0;
   overflow: auto;
   display: flex;
+  align-items: center;
   gap: 16px;
 
   -ms-overflow-style: none;
@@ -133,12 +138,16 @@
 
 .admin-bar__link, .admin-bar__dropdown-link {
   display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  white-space: nowrap;
   gap: 8px;
   padding: 7px;
   border-radius: 4px;
 
   svg {
     width: var(--admin-bar--icon-size);
+    flex-shrink: 0;
     fill: var(--admin-bar--color);
   }
 }
