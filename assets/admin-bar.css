@@ -10,6 +10,7 @@
   --admin-bar--padding: 0 16px;
   --admin-bar--icon-size: 18px;
   --admin-bar--dropdown-border-radius: 4px;
+  --admin-bar--fade-size: 48px;
 }
 
 .admin-bar--theme-auto, .admin-bar--theme-light {
@@ -23,6 +24,9 @@
   --admin-bar--link-icon-color: #82AD2B;
   --admin-bar--link-color--hover: #D1E9A3;
   --admin-bar--link-background-color--hover: #CBE29E;
+  /* Current item (matches the Panel's active menu button) */
+  --admin-bar--current-background-color: #FFF;
+  --admin-bar--current-shadow: 0 1px 3px 0 #0000001a, 0 1px 2px 0 #00000006;
 }
 
 
@@ -37,6 +41,8 @@
     --admin-bar--link-icon-color: #59761D;
     --admin-bar--link-color--hover: #0C1004;
     --admin-bar--link-background-color--hover: #A0CC48;
+    --admin-bar--current-background-color: #2B2B2B;
+    --admin-bar--current-shadow: 0 1px 3px 0 #0003, 0 1px 2px 0 #00000020;
   }
 }
 
@@ -50,6 +56,8 @@
   --admin-bar--link-icon-color: #59761D;
   --admin-bar--link-color--hover: #0C1004;
   --admin-bar--link-background-color--hover: #A0CC48;
+  --admin-bar--current-background-color: #2B2B2B;
+  --admin-bar--current-shadow: 0 1px 3px 0 #0003, 0 1px 2px 0 #00000020;
 }
 
 .admin-bar {
@@ -127,9 +135,25 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-right: 16px;
 
   -ms-overflow-style: none;
   scrollbar-width: none;
+
+  /* fade out links cut off by the overflow; the classes are toggled by the
+     inline script depending on the scroll position */
+  --admin-bar--fade-start: 0px;
+  --admin-bar--fade-end: 0px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--admin-bar--fade-start), #000 calc(100% - var(--admin-bar--fade-end)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--admin-bar--fade-start), #000 calc(100% - var(--admin-bar--fade-end)), transparent);
+
+  &.admin-bar__links--fade-start {
+    --admin-bar--fade-start: var(--admin-bar--fade-size);
+  }
+
+  &.admin-bar__links--fade-end {
+    --admin-bar--fade-end: var(--admin-bar--fade-size);
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -179,13 +203,48 @@ a.admin-bar__link--highlight:hover {
   background: var(--admin-bar--background-color);
 }
 
-.admin-bar__dropdown-link:not(:last-child):not(:first-child) {
+.admin-bar__dropdown-link:not(:last-child):not(:first-of-type) {
   display: none;
+}
+
+.admin-bar__theme {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px 7px;
+}
+
+.admin-bar__theme-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  margin: 0;
+  border: 0;
+  border-radius: var(--admin-bar--border-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+
+  svg {
+    width: var(--admin-bar--icon-size);
+    fill: var(--admin-bar--color);
+  }
+
+  &[aria-pressed="true"] {
+    background: var(--admin-bar--current-background-color);
+    box-shadow: var(--admin-bar--current-shadow);
+    cursor: default;
+  }
 }
 
 .admin-bar__separator {
   flex-shrink: 0;
-  width: 8px;
+  align-self: center;
+  width: 1px;
+  height: var(--admin-bar--icon-size);
+  background: var(--admin-bar--border-color);
 }
 
 .admin-bar__dropdown-separator {
@@ -203,7 +262,7 @@ a.admin-bar__link--highlight:hover {
     display: none;
   }
 
-  .admin-bar__dropdown-link:not(:last-child):not(:first-child) {
+  .admin-bar__dropdown-link:not(:last-child):not(:first-of-type) {
     display: flex;
   }
 

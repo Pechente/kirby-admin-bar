@@ -3,7 +3,7 @@
     "description": "Kirby Admin Bar",
     "license": "MIT",
     "type": "kirby-plugin",
-    "version": "2.3.1",
+    "version": "3.0.0",
     "homepage": "https://github.com/Pechente/kirby-admin-bar",
     "support": {
         "docs": "https://github.com/Pechente/kirby-admin-bar/blob/main/README.md",
@@ -16,13 +16,14 @@
         }
     ],
     "require": {
-        "php": ">=8.0.0",
-        "getkirby/cms": ">=4.0.0",
+        "php": ">=8.1.0",
+        "getkirby/cms": "^4.0 || ^5.0 || ^6.0",
         "getkirby/composer-installer": "^1.2"
     },
     "keywords": [
         "kirby4",
         "kirby5",
+        "kirby6",
         "kirby-cms",
         "kirby-plugin",
         "admin",
